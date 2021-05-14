@@ -8,9 +8,10 @@ import pprint
 import requests
 from datetime import datetime 
 from urllib.parse import urlencode
+import config
 
 url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService/getVilageFcst'
-service_key = 'jEN2Laz4w112BMQec2i/j147DpKIiOI2sbkVDa/d2o1UjrTlybQlSLdVZ9nezp+lUjzg/QnOHzIGzEvEXDi6eQ=='
+service_key = config.SERVICE_KEY
 
 geo_list = None 
 nx = 0
