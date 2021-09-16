@@ -3,23 +3,22 @@
 import discord
 from discord.ext import commands
 import random
+from datetime import datetime
+import config 
 
-description = '''An example bot to showcase the discord.ext.commands extension
-module.
-There are a number of utility commands being showcased here.'''
+description = '''디스코드봇을 만들기 위한 샘플 코드'''
 
 intents = discord.Intents.default()
 intents.members = True
 
-# 명령은 .(점) 으로 시작함. 
+# 명령은 /(슬래시)로 시작함. 
 bot = commands.Bot(command_prefix='/', description=description, intents=intents) 
+
 
 @bot.event
 async def on_ready():
-    print('Logged in as')
-    print(bot.user.name)
-    print(bot.user.id)
-    print('------')
+    print(f"{bot.user.name}님이 로그인 하셨습니다. --- Id: {bot.user.id} 로그인시간: {datetime.now()}")
+    print('-'*80)
 
 
 @bot.command(aliases=['.', 't'])
@@ -66,13 +65,16 @@ async def shortwords(ctx):
 
     await ctx.send( random.choice(responses))
 
-# 사용법 : .add 10 20 
+# 사용법 : /add 10 20 
 @bot.command()
 async def add(ctx, left: int, right: int):
     """Adds two numbers together."""
-    await ctx.send(left + right)
+    # await ctx.send(left + right)
+    val = left + right
+    embed=discord.Embed(title="Bot1",description=f"합: {val}",color=0)
+    await ctx.send(embed = embed)
 
-# 사용법 : .roll 3d10   => 10까지 수 중 3번 주사위 굴려! 
+# 사용법 : /roll 3d10   => 10까지 수 중 3번 주사위 굴려! 
 @bot.command()
 async def roll(ctx, dice: str):
     """Rolls a dice in NdN format."""
@@ -85,13 +87,13 @@ async def roll(ctx, dice: str):
     result = ', '.join(str(random.randint(1, limit)) for r in range(rolls))
     await ctx.send(result)
 
-# 사용법 : choose 1 2 3 4 5 6  
+# 사용법 : /choose 1 2 3 4 5 6  
 @bot.command(description='For when you wanna settle the score some other way')
 async def choose(ctx, *choices: str):
     """Chooses between multiple choices."""
     await ctx.send(random.choice(choices))
 
-# 사용법 : .repeat 100 "아토쌤 사랑해요~"
+# 사용법 : /repeat 100 "아토쌤 사랑해요~"
 @bot.command()
 async def repeat(ctx, times: int, content='repeating...'):
     """Repeats a message multiple times."""
@@ -116,5 +118,4 @@ async def _bot(ctx):
     """Is the bot cool?"""
     await ctx.send('Yes, the bot is cool.')
 
-# bot.run('ODA3ODQzNjAxNTY4NDk3Njg0.YB94-w.45kw55Pw3k4qwv-0ePVKQuS3nuE')
-bot.run( 'ODQxMjQ0MDU0NTc0NTk2MTI4.YJj7lA.441sAFiYq3uSsE8ZlF7fFXNfY4o')
+bot.run( config.TOKEN)

@@ -24,6 +24,8 @@ async def on_member_remove(member):
 async def ping(ctx):
     await ctx.send(f"Pong2! {round( client.latency * 1000)} ms")
 
+# 명령어 예시
+# .test gg
 @client.command(aliases=['8ball', 'test', '아무거나']) 
 async def _8ball(ctx, *, question):
     responses = [
@@ -76,10 +78,14 @@ ctx.author.display_name
 ctx.author.avatar_url
 
 '''
+
+# 명령어 예시
+# .날씨 서울특별시 강동구 
 @client.command(aliases=['날씨', 'weather']) 
 async def _weather(ctx, *, question):
     response = open_weather.predict_weather(question)
-    embed_msg = discord.Embed(title="날씨 조회 서비스", url="", description=response, color=0xFF5733)
+    c = discord.Color.from_rgb(0, 0, 255)
+    embed_msg = discord.Embed(title="날씨 조회 서비스", url="", description=response, color=c)
     embed_msg.set_author(name="ato",icon_url="http://learnsteam.co.kr/kbd/wp-content/uploads/2017/09/robots.png")
     # await ctx.send(f"지역 날씨: {question}\n결과: {response}")
     await ctx.send(embed=embed_msg)

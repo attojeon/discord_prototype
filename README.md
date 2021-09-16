@@ -1,3 +1,7 @@
+### 설치
+```
+> pip install discord.py
+```
 ### 봇 실행하기
 > python3 discord_bot.py 
 
